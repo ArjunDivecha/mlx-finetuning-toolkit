@@ -19,13 +19,19 @@ from rich import print as rprint
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 try:
-    from cli.config import MLXConfig, ConfigManager
-    from cli.training import TrainingManager
-    from cli.utils import check_system_requirements, get_hardware_info
+    from .config import MLXConfig, ConfigManager
+    from .training import TrainingManager
+    from .utils import check_system_requirements, get_hardware_info
 except ImportError as e:
-    rprint(f"[red]Error importing modules: {e}[/red]")
-    rprint("[yellow]Make sure you're running from the correct directory and have installed dependencies[/yellow]")
-    sys.exit(1)
+    try:
+        # Fallback to absolute imports
+        from cli.config import MLXConfig, ConfigManager
+        from cli.training import TrainingManager
+        from cli.utils import check_system_requirements, get_hardware_info
+    except ImportError as e2:
+        rprint(f"[red]Error importing modules: {e2}[/red]")
+        rprint("[yellow]Make sure you're running from the correct directory and have installed dependencies[/yellow]")
+        sys.exit(1)
 
 console = Console()
 

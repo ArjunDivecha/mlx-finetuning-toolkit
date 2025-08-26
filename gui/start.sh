@@ -24,15 +24,16 @@ if [ ! -d "frontend/node_modules" ]; then
     cd ..
 fi
 
-# Check if Python dependencies are installed
-echo "🐍 Checking Python backend dependencies..."
-source "/Users/macbook2024/Library/CloudStorage/Dropbox/AAA Backup/A Working/Arjun LLM Writing/local_qwen/.venv/bin/activate"
-
-# Test if FastAPI is available
-if ! python -c "import fastapi" 2>/dev/null; then
-    echo "📦 Installing backend dependencies..."
-    pip install -r backend/requirements.txt
+# Check if frontend is built
+if [ ! -f "frontend/dist/index.html" ]; then
+    echo "🔨 Building frontend..."
+    cd frontend && npm run build
+    cd ..
 fi
+
+# Check and install all dependencies using our dependency checker
+echo "🔍 Checking all dependencies..."
+python check_deps.py
 
 echo "✅ All dependencies installed successfully!"
 echo ""
