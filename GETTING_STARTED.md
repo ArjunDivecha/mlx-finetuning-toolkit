@@ -15,19 +15,20 @@ mlx-finetune download qwen3-0.5b-mlx
 ```
 *This downloads the fastest, smallest model perfect for getting started*
 
-### 3. Prepare Sample Data
-Create a file called `my_data.jsonl`:
-```json
-{"messages": [{"role": "user", "content": "Hello"}, {"role": "assistant", "content": "Hi! How can I help you today?"}]}
-{"messages": [{"role": "user", "content": "What's the weather like?"}, {"role": "assistant", "content": "I don't have access to current weather data, but I'd be happy to help with other questions!"}]}
-{"messages": [{"role": "user", "content": "Tell me a joke"}, {"role": "assistant", "content": "Why did the ML model go to therapy? It had too many layers of complexity!"}]}
+### 3. Use Ready-Made Sample Data (Already Included!)
+No need to create files - we've included comprehensive samples:
+```bash
+# See what's included
+ls sample_*.jsonl
+# sample_training_data.jsonl    (15 diverse examples)
+# sample_validation_data.jsonl  (5 validation examples)
 ```
 
-### 4. Start Training
+### 4. Start Training (Zero Setup!)
 ```bash
-mlx-finetune train --data my_data.jsonl
+mlx-finetune train --data sample_training_data.jsonl --validation sample_validation_data.jsonl
 ```
-*Uses the default model (qwen3-0.5b-mlx) - training will be very fast!*
+*Uses default model (qwen3-0.5b-mlx) + included sample data - training will be very fast!*
 
 ### 5. Launch GUI (Optional)
 ```bash
@@ -65,8 +66,15 @@ mlx-finetuning-toolkit/
 - Use 10-100 training examples first
 - Training takes minutes, not hours
 
-### Data Format
-Your JSONL file should contain conversations:
+### Sample Data Contents
+The included sample datasets contain diverse conversation examples:
+- **Greetings & casual conversation**
+- **Question answering** (weather, technology, life advice)
+- **Creative tasks** (jokes, stories, recommendations)
+- **Educational content** (explanations, tutorials, study tips)
+- **Practical help** (recipes, emails, motivation)
+
+**Data Format** (if you create your own):
 ```json
 {"messages": [
   {"role": "user", "content": "Question here"},

@@ -63,15 +63,22 @@ mlx-finetune download qwen3-0.5b-mlx
 # Or see all available models: mlx-finetune download --list
 ```
 
-2. **Prepare your data** (JSONL format):
-```json
-{"messages": [{"role": "user", "content": "Hello"}, {"role": "assistant", "content": "Hi there!"}]}
+2. **Use sample data (or prepare your own)** - Ready-to-use samples included!:
+```bash
+# Option A: Use included sample data (15 examples)
+mlx-finetune train --data sample_training_data.jsonl --validation sample_validation_data.jsonl
+
+# Option B: Create your own JSONL file
+# Format: {"messages": [{"role": "user", "content": "Hello"}, {"role": "assistant", "content": "Hi there!"}]}
 ```
 
-3. **Start training** (uses the default model if not specified):
+3. **Start training** (uses the default model and sample data):
 ```bash
-mlx-finetune train --data my_training_data.jsonl
-# Or specify a model: mlx-finetune train --model qwen3-0.5b-mlx --data my_training_data.jsonl
+# Quick test with samples (recommended first run)
+mlx-finetune train --data sample_training_data.jsonl
+
+# With validation (tracks training progress)
+mlx-finetune train --data sample_training_data.jsonl --validation sample_validation_data.jsonl
 ```
 
 4. **Launch GUI (optional)**:
@@ -84,11 +91,13 @@ mlx-finetune gui
 After running the commands above, your directory will look like this:
 ```
 mlx-finetuning-toolkit/
-├── models/                    # Downloaded models stored here
-│   └── qwen3-0.5b-mlx/       # Your downloaded model
-├── outputs/                   # Training outputs (adapters, logs)
-│   └── my_training_run/       # Individual training session
-├── your_training_data.jsonl   # Your training data
+├── models/                         # Downloaded models stored here
+│   └── qwen3-0.5b-mlx/            # Your downloaded model (500MB)
+├── outputs/                        # Training outputs (adapters, logs)
+│   └── run_20240826_120000/       # Individual training session
+├── sample_training_data.jsonl      # ✨ Ready-to-use training examples (15 samples)
+├── sample_validation_data.jsonl    # ✨ Ready-to-use validation examples (5 samples)
+├── GETTING_STARTED.md              # 5-minute quick start guide
 └── ... (toolkit files)
 ```
 
