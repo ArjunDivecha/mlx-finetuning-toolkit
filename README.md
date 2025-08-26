@@ -41,6 +41,18 @@ curl -sSL https://install.mlx-finetuning-toolkit.com | bash
 - **Storage Space**: 2-15GB depending on model size (see table below)
 - **Memory**: 8GB RAM minimum (16GB+ recommended for larger models)
 
+### ⚠️ Environment Setup (Important!)
+If you're using Anaconda/conda and see pydantic import errors:
+```bash
+# Deactivate conda to avoid conflicts
+conda deactivate
+
+# Use system Python for clean installation
+/usr/bin/python3 -m venv mlx-finetune-env
+source mlx-finetune-env/bin/activate
+```
+See [ENVIRONMENT_SETUP.md](ENVIRONMENT_SETUP.md) for detailed troubleshooting.
+
 ### Installation
 
 **Option 1: One-Line Install (Recommended)**
@@ -83,7 +95,11 @@ mlx-finetune train --data sample_training_data.jsonl --validation sample_validat
 
 4. **Launch GUI (optional)**:
 ```bash
+# Launch GUI from CLI
 mlx-finetune gui
+
+# Or run GUI directly
+cd gui && python run_gui.py
 ```
 
 ### 📁 **File Structure After Installation**

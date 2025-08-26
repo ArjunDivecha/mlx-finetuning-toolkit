@@ -345,6 +345,38 @@ def config(create, validate, show):
     
     rprint("[yellow]Use --help to see configuration options[/yellow]")
 
+@cli.command()
+def gui():
+    """
+    🖥️ Launch the GUI application
+    
+    Start the desktop GUI for visual fine-tuning.
+    """
+    import subprocess
+    import sys
+    from pathlib import Path
+    
+    # Find the GUI directory
+    gui_dir = Path(__file__).parent.parent / "gui"
+    gui_launcher = gui_dir / "run_gui.py"
+    
+    if not gui_launcher.exists():
+        rprint("[red]❌ GUI launcher not found[/red]")
+        rprint(f"[dim]Expected location: {gui_launcher}[/dim]")
+        return
+    
+    rprint("[blue]🚀 Launching MLX Fine-Tuning GUI...[/blue]")
+    
+    try:
+        # Run the GUI launcher
+        subprocess.run([sys.executable, str(gui_launcher)], cwd=gui_dir)
+    except KeyboardInterrupt:
+        rprint("\n[yellow]GUI stopped by user[/yellow]")
+    except Exception as e:
+        rprint(f"[red]❌ Error launching GUI: {e}[/red]")
+        rprint("[dim]Try running the GUI directly:[/dim]")
+        rprint(f"[dim]cd {gui_dir} && python run_gui.py[/dim]")
+
 def main():
     """Entry point for the CLI application"""
     try:
