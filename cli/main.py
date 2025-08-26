@@ -55,7 +55,7 @@ def cli(ctx, version):
         ))
 
 @cli.command()
-@click.option('--model', default='qwen2.5-7b-instruct', help='Model to fine-tune')
+@click.option('--model', default='qwen3-0.5b-mlx', help='Model to fine-tune')
 @click.option('--data', required=True, type=click.Path(exists=True), help='Training data file (JSONL format)')
 @click.option('--validation', type=click.Path(exists=True), help='Validation data file (optional)')
 @click.option('--config', type=click.Path(), help='Configuration file (YAML)')
@@ -140,11 +140,12 @@ def download(model, list_models, download_dir, force):
         table.add_column("Description", style="green")
         
         models = {
-            "qwen2.5-7b-instruct": ("4.5GB", "Recommended for most use cases"),
-            "qwen2.5-3b-instruct": ("1.9GB", "Smaller model for faster training"),
-            "qwen2.5-1.5b-instruct": ("0.9GB", "Smallest model for testing"),
-            "llama-3.1-8b-instruct": ("4.9GB", "Good performance alternative"),
+            "qwen3-0.5b-mlx": ("500MB", "⭐ Default - Ultra-fast training, perfect for getting started"),
+            "qwen2.5-1.5b-instruct": ("900MB", "Small model for testing and experimentation"),
+            "qwen2.5-3b-instruct": ("1.9GB", "Balanced model for most use cases"),
+            "qwen2.5-7b-instruct": ("4.5GB", "High-quality results, slower training"),
             "llama-3.2-3b-instruct": ("1.8GB", "Compact Llama model"),
+            "llama-3.1-8b-instruct": ("4.9GB", "Good performance alternative"),
             "mistral-7b-instruct": ("4.1GB", "European open source model"),
         }
         

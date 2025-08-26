@@ -35,9 +35,11 @@ curl -sSL https://install.mlx-finetuning-toolkit.com | bash
 ## Quick Start
 
 ### Prerequisites
-- macOS 12.0+ (Monterey or later)
-- Apple Silicon Mac (M1/M2/M3/M4) recommended
-- Python 3.9 or later
+- **macOS 12.0+** (Monterey or later)
+- **Apple Silicon Mac** (M1/M2/M3/M4) recommended
+- **Python 3.9+** or later
+- **Storage Space**: 2-15GB depending on model size (see table below)
+- **Memory**: 8GB RAM minimum (16GB+ recommended for larger models)
 
 ### Installation
 
@@ -55,9 +57,10 @@ pip install -e .
 
 ### Basic Usage
 
-1. **Download a model**:
+1. **Download a model** (starts with the fastest, smallest model):
 ```bash
-mlx-finetune download qwen2.5-7b-instruct
+mlx-finetune download qwen3-0.5b-mlx
+# Or see all available models: mlx-finetune download --list
 ```
 
 2. **Prepare your data** (JSONL format):
@@ -65,15 +68,40 @@ mlx-finetune download qwen2.5-7b-instruct
 {"messages": [{"role": "user", "content": "Hello"}, {"role": "assistant", "content": "Hi there!"}]}
 ```
 
-3. **Start training**:
+3. **Start training** (uses the default model if not specified):
 ```bash
-mlx-finetune train --model qwen2.5-7b-instruct --data my_training_data.jsonl
+mlx-finetune train --data my_training_data.jsonl
+# Or specify a model: mlx-finetune train --model qwen3-0.5b-mlx --data my_training_data.jsonl
 ```
 
 4. **Launch GUI (optional)**:
 ```bash
 mlx-finetune gui
 ```
+
+### 📁 **File Structure After Installation**
+
+After running the commands above, your directory will look like this:
+```
+mlx-finetuning-toolkit/
+├── models/                    # Downloaded models stored here
+│   └── qwen3-0.5b-mlx/       # Your downloaded model
+├── outputs/                   # Training outputs (adapters, logs)
+│   └── my_training_run/       # Individual training session
+├── your_training_data.jsonl   # Your training data
+└── ... (toolkit files)
+```
+
+**Model Storage:**
+- Models are downloaded to `./models/` directory by default
+- You can specify custom location with `--dir` flag
+- Models are reused across training sessions
+- No need to re-download unless you want different models
+
+**Training Outputs:**
+- Fine-tuned adapters saved to `./outputs/`
+- Logs and checkpoints included
+- Each training run gets its own subdirectory
 
 ## Documentation
 
@@ -85,12 +113,21 @@ mlx-finetune gui
 
 ## Supported Models
 
-| Model | Size | Description |
-|-------|------|-------------|
-| qwen2.5-7b-instruct | 4.5GB | Recommended for most use cases |
-| qwen2.5-3b-instruct | 1.9GB | Smaller model for faster training |
-| llama-3.1-8b-instruct | 4.9GB | Good performance alternative |
-| mistral-7b-instruct | 4.1GB | European open source model |
+| Model | Size | Training Speed | Description |
+|-------|------|---------------|-------------|
+| **qwen3-0.5b-mlx** ⭐ | 500MB | Ultra-fast | **Default** - Perfect for getting started, rapid prototyping |
+| qwen2.5-1.5b-instruct | 900MB | Very fast | Small model for testing and experimentation |
+| qwen2.5-3b-instruct | 1.9GB | Fast | Balanced model for most production use cases |
+| qwen2.5-7b-instruct | 4.5GB | Moderate | High-quality results, requires more time/memory |
+| llama-3.2-3b-instruct | 1.8GB | Fast | Compact Llama model alternative |
+| llama-3.1-8b-instruct | 4.9GB | Slow | Good performance alternative to Qwen |
+| mistral-7b-instruct | 4.1GB | Moderate | European open source model |
+
+### 💡 **Choosing the Right Model:**
+- **New users**: Start with `qwen3-0.5b-mlx` (default)
+- **Production**: Use `qwen2.5-3b-instruct` or larger
+- **Memory-constrained**: Stick with models ≤1.5B parameters
+- **High quality**: Use 7B+ models for best results
 
 ## Contributing
 
